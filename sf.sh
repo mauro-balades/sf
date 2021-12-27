@@ -35,7 +35,7 @@ BRED="\e[1;31m"
 BGRAY="\e[1;30m"
 
 # Default values
-CCOLOR="\e[0;36m" # -c | --color     : Default color for information text (defaults to cyan)
+CCOLOR="auto"     # -c | --color     : Default color for information text (defaults to cyan)
 TEXT="false"      # -t | --text      : Show text instead of icons         (defaults to false)
 OS="auto"         # -o | --OS        : OS to display in the screen        (defaults to auto)
 UPPER_TEXT="true" # -u | --uper-text : print upper text if text is true   (defaults to true)
@@ -73,6 +73,16 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ ! "$CCOLOR" == "auto" ];
+then
+    BGREEN="$CCOLOR"
+    BMAGENTA="$CCOLOR"
+    BCYAN="$CCOLOR"
+    BBLUE="$CCOLOR"
+    BRED="$CCOLOR"
+    BGRAY="$CCOLOR"
+fi
+
 # We will start by geting the distro's
 # information.
 
@@ -81,6 +91,12 @@ USER=$(whoami)
 
 # Get linux kernel version
 KERNEL=$(uname -r)
+
+# Get CPU information
+CPU=$(lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p')
+
+# Define the uptime
+UPTIME=$(echo $(uname -r) | cut -d'-'  -f1-1)
 
 # Get shell.
 # we use basename to get the "shell name".
@@ -142,7 +158,7 @@ fi
 ICON1="$BGRAY      ___      "
 ICON2="$BGRAY  ___/   \\___ "
 ICON3="$BGRAY /   '---'   \\"
-ICON4="$BGRAY '--_______--' "
+ICON4="$BGRAY '--_______--'"
 ICON5="$BGRAY      / \\     "
 ICON6="$BGRAY     /   \\    "
 ICON7="$BGRAY    /     \\   "
@@ -163,7 +179,7 @@ elif [ "$OS" == "Gentoo" ]; then
     ICON3="$BMAGENTA   \\    0   \\  "
     ICON4="$BMAGENTA    \\        ) "
     ICON5="$BMAGENTA    /      _/  "
-    ICON6="$BMAGENTA   (     _-     "
+    ICON6="$BMAGENTA   (     _-    "
     ICON7="$BMAGENTA   \\____-      "
     ICON8="$BMAGENTA                "
 elif [ "$OS" == "Linux Mint" ]; then
@@ -191,7 +207,7 @@ elif [ "$OS" == "openSUSE Leap" ]; then
     ICON4="$BGREEN      \\__/ | "
     ICON5="$BGREEN    _______| "
     ICON6="$BGREEN    \\_______ "
-    ICON7="$BGREEN __________/  "
+    ICON7="$BGREEN __________/ "
     ICON8="$BGREEN              "
 elif [ "$OS" == "NixOS" ]; then
     ICON1="$BMAGENTA                     "
@@ -199,7 +215,7 @@ elif [ "$OS" == "NixOS" ]; then
     ICON3="$BMAGENTA  ==\\\\__\\\\/ //   "
     ICON4="$BMAGENTA    //   \\\\//   "
     ICON5="$BMAGENTA ==//     //== "
-    ICON6="$BMAGENTA  //\\\\___//        "
+    ICON6="$BMAGENTA  //\\\\___//     "
     ICON7="$BMAGENTA // /\\\\  \\\\==    "
     ICON8="$BMAGENTA   // \\\\  \\\\     "
 elif [ "$OS" == "postmarketOS" ]; then
@@ -208,8 +224,8 @@ elif [ "$OS" == "postmarketOS" ]; then
     ICON3="$BGREEN      /    \\      "
     ICON4="$BGREEN     /\\__   \\     "
     ICON5="$BGREEN    /   /\\  _\\    "
-    ICON6="$BGREEN   /   ___\\/  \\  "
-    ICON7="$BGREEN  /    \\       \\ "
+    ICON6="$BGREEN   /   ___\\/  \\   "
+    ICON7="$BGREEN  /    \\       \\  "
     ICON8="$BGREEN /_____/________\\ "
 elif [ "$OS" == "Pop!_OS" ]; then
     ICON1="$BCYAN ______               "
@@ -244,16 +260,16 @@ elif [ "$OS" == "Solus" ]; then
     ICON3="$BMAGENTA   /   /\\ \\     \\  "
     ICON4="$BMAGENTA  /   /  \\ \\     \\ "
     ICON5="$BMAGENTA |   /    \\ \\     |"
-    ICON6="$BMAGENTA  \\--------------/   "
-    ICON7="$BMAGENTA   \\------------/    "
+    ICON6="$BMAGENTA  \\--------------/ "
+    ICON7="$BMAGENTA   \\------------/  "
     ICON8="$BMAGENTA    \\----------/     "
 elif [ "$OS" == "Ubuntu" ]; then
-    ICON1="$BRED "
+    ICON1="$BRED              "
     ICON2="$BRED          _   "
     ICON3="$BRED      ---(_)  "
     ICON4="$BRED  _/  ---  \\  "
     ICON5="$BRED (_) |   |    "
-    ICON6="$BRED   \\  --- _/ "
+    ICON6="$BRED   \\  --- _/  "
     ICON7="$BRED      ---(_)  "
     ICON8="$BRED              "
 elif [ "$OS" == "void" ]; then
@@ -262,9 +278,19 @@ elif [ "$OS" == "void" ]; then
     ICON3="$BGREEN   / / ____ \\ \\   "
     ICON4="$BGREEN  / / /    \\ \\ \\  "
     ICON5="$BGREEN  | |         | | "
-    ICON6="$BGREEN  \\ \\ \\____/ / /"
-    ICON7="$BGREEN   \\ \\____  /_/  "
+    ICON6="$BGREEN  \\ \\ \\____/ / /  "
+    ICON7="$BGREEN   \\ \\____  /_/   "
     ICON8="$BGREEN    -_____\\       "
+elif [ "$OS" == "Debian" ] || [ "$OS" == "Debian GNU/Linux" ];
+then
+    ICON1="$BRED   _____   "
+    ICON2="$BRED  /  __ \\ "
+    ICON3="$BRED |  /    |"
+    ICON4="$BRED |  \\___- "
+    ICON5="$BRED -_       "
+    ICON6="$BRED   --_    "
+    ICON7="$BRED          "
+    ICON8="$BRED           "
 fi
 
 print_section() {
@@ -282,28 +308,28 @@ then
     print_section "$ICON3"   ""  "$OS"
     print_section "$ICON4"   ""  "$KERNEL"
     print_section "$ICON5"   ""  "$SHELL"
-    print_section "$ICON6"
-    print_section "$ICON7"
+    print_section "$ICON6"   ""  "$CPU"
+    print_section "$ICON7"   ""  "$UPTIME"
     print_section "$ICON8"
 else
     if [ "$UPPER_TEXT" == "true" ];
     then
         print_section "$ICON1"
         print_section "$ICON2"   "  USER"  "$USER"
-        print_section "$ICON3"   "    OS"  "$OS"
-        print_section "$ICON4"   "KERNEL"  "$KERNEL"
-        print_section "$ICON5"   " SHELL"  "$SHELL"
-        print_section "$ICON6"
-        print_section "$ICON7"
+        print_section "$ICON3"   "KERNEL"  "$KERNEL"
+        print_section "$ICON4"   " SHELL"  "$SHELL"
+        print_section "$ICON5"   "UPTIME"  "$UPTIME"
+        print_section "$ICON6"   "   CPU"  "$CPU"
+        print_section "$ICON7"   "    OS"  "$OS"
         print_section "$ICON8"
     else
         print_section "$ICON1"
         print_section "$ICON2"   "  user"  "$USER"
-        print_section "$ICON3"   "    os"  "$OS"
-        print_section "$ICON4"   "kernel"  "$KERNEL"
-        print_section "$ICON5"   " shell"  "$SHELL"
-        print_section "$ICON6"
-        print_section "$ICON7"
+        print_section "$ICON3"   "kernel"  "$KERNEL"
+        print_section "$ICON4"   " shell"  "$SHELL"
+        print_section "$ICON5"   "uptime"  "$UPTIME"
+        print_section "$ICON6"   "   cpu"  "$CPU"
+        print_section "$ICON7"   "    os"  "$OS"
         print_section "$ICON8"
     fi
 fi
