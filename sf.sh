@@ -79,6 +79,18 @@ done
 # Get current linux user.
 USER=$(whoami)
 
+# Get linux kernel version
+KERNEL=$(uname -r)
+
+# Get shell.
+# we use basename to get the "shell name".
+# e.g.
+#   Imagine you use zsh for your shell.
+#   "$SHELL" would be equal to "/bin/zsh".
+#   if we get the base name, we would get
+#   "zsg" as the return value
+SHELL=$(basename "$SHELL")
+
 # get OS if the argument (OS) is set to auto.
 
 if [ "$OS" == "auto" ];
@@ -260,7 +272,7 @@ print_section() {
     SECTION="$2"
     VALUE="$3"
 
-    echo -e "$ICON    $SECTION  $VALUE"
+    echo -e "$ICON    $SECTION $RESET$VALUE"
 }
 
 if [ "$TEXT" == "false" ];
@@ -268,7 +280,7 @@ then
     print_section "$ICON1"
     print_section "$ICON2"   ""  "$USER"
     print_section "$ICON3"   ""  "$OS"
-    print_section "$ICON4"   ""
+    print_section "$ICON4"   ""  "$KERNEL"
     print_section "$ICON5"   ""  "$SHELL"
     print_section "$ICON6"
     print_section "$ICON7"
@@ -279,7 +291,7 @@ else
         print_section "$ICON1"
         print_section "$ICON2"   "  USER"  "$USER"
         print_section "$ICON3"   "    OS"  "$OS"
-        print_section "$ICON4"   "KERNEL"  ""
+        print_section "$ICON4"   "KERNEL"  "$KERNEL"
         print_section "$ICON5"   " SHELL"  "$SHELL"
         print_section "$ICON6"
         print_section "$ICON7"
@@ -288,7 +300,7 @@ else
         print_section "$ICON1"
         print_section "$ICON2"   "  user"  "$USER"
         print_section "$ICON3"   "    os"  "$OS"
-        print_section "$ICON4"   "kernel"
+        print_section "$ICON4"   "kernel"  "$KERNEL"
         print_section "$ICON5"   " shell"  "$SHELL"
         print_section "$ICON6"
         print_section "$ICON7"
