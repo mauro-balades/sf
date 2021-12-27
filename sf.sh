@@ -34,40 +34,83 @@ BBLUE="\e[1;34m"
 BRED="\e[1;31m"
 BGRAY="\e[1;30m"
 
+# Default values
+CCOLOR="\e[0;36m" # -c | --color : Default color for information text (defaults to cyan)
+TEXT="false"      # -t | --text  : Show text instead of icons         (defaults to false)
+OS="auto"         # -o | --OS    : OS to display in the screen        (defaults to auto)
+
+# Parse command line arguments
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+    -c|--color)
+      CCOLOR="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -t|--text)
+      TEXT="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -o|--OS)
+      OS="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    *)    # unknown option
+      POSITIONAL+=("$1") # save it in an array for later
+      shift # past argument
+      ;;
+  esac
+done
+
 # We will start by geting the distro's
-# name and version.
-# OS  = name of distro
-# VER = version
-if [ -f /etc/os-release ]; then
-    # freedesktop.org and systemd
-    . /etc/os-release
-    OS=$NAME
-    VER=$VERSION_ID
-elif type lsb_release > /dev/null 2>&1; then
-    # linuxbase.org
-    OS=$(lsb_release -si)
-    VER=$(lsb_release -sr)
-elif [ -f /etc/lsb-release ]; then
-    # For some versions of Debian/Ubuntu without lsb_release command
-    . /etc/lsb-release
-    OS=$DISTRIB_ID
-    VER=$DISTRIB_RELEASE
-elif [ -f /etc/debian_version ]; then
-    # Older Debian/Ubuntu/etc.
-    OS=Debian
-    VER=$(cat /etc/debian_version)
-elif [ -f /etc/SuSe-release ]; then
-    # Older SuSE/etc.
-    # TODO
-    ...
-elif [ -f /etc/redhat-release ]; then
-    # Older Red Hat, CentOS, etc.
-    # TODO
-    ...
-else
-    # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
-    OS=$(uname -s)
-    VER=$(uname -r)
+# information.
+
+# Get current linux user.
+USER=$(whoami)
+
+# get OS if the argument (OS) is set to auto.
+
+if [ "$OS" == "auto" ];
+then
+    # Check if /etc/os-release exists
+    if [ -f /etc/os-release ]; then
+        # Source os-release
+        . /etc/os-release
+
+        # Get variables
+        OS=$NAME
+        VER=$VERSION_ID
+    elif type lsb_release > /dev/null 2>&1; then
+        # linuxbase.org
+        OS=$(lsb_release -si)
+        VER=$(lsb_release -sr)
+    elif [ -f /etc/lsb-release ]; then
+        # For some versions of Debian/Ubuntu without lsb_release command
+        . /etc/lsb-release
+        OS=$DISTRIB_ID
+        VER=$DISTRIB_RELEASE
+    elif [ -f /etc/debian_version ]; then
+        # Older Debian/Ubuntu/etc.
+        OS=Debian
+        VER=$(cat /etc/debian_version)
+    elif [ -f /etc/SuSe-release ]; then
+        # Older SuSE/etc.
+        # TODO
+        ...
+    elif [ -f /etc/redhat-release ]; then
+        # Older Red Hat, CentOS, etc.
+        # TODO
+        ...
+    else
+        # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
+        OS=$(uname -s)
+        VER=$(uname -r)
+    fi
 fi
 
 # next, we will continue by getting the
@@ -90,7 +133,7 @@ ICON8="$BGRAY               "
 if [ "$OS" == "KDE neon" ]; then
     ICON1="$BGREEN              "
     ICON2="$BGREEN      --- _   "
-    ICON3="$BGREEN   /  ---  \\ "
+    ICON3="$BGREEN   /  ---  \\  "
     ICON4="$BGREEN  |  |   |  | "
     ICON5="$BGREEN   \\  --- _/ "
     ICON6="$BGREEN      ---     "
@@ -99,7 +142,7 @@ if [ "$OS" == "KDE neon" ]; then
 elif [ "$OS" == "Gentoo" ]; then
     ICON1="$BMAGENTA    _-----_     "
     ICON2="$BMAGENTA   (       \\   "
-    ICON3="$BMAGENTA   \\    0   \\ "
+    ICON3="$BMAGENTA   \\    0   \\  "
     ICON4="$BMAGENTA    \\        ) "
     ICON5="$BMAGENTA    /      _/   "
     ICON6="$BMAGENTA   (     _-     "
@@ -108,7 +151,7 @@ elif [ "$OS" == "Gentoo" ]; then
 elif [ "$OS" == "Linux Mint" ]; then
     ICON1="$BGREEN    _____________    "
     ICON2="$BGREEN   |_            \\  "
-    ICON3="$BGREEN    |  | _____  |    "
+    ICON3="$BGREEN    |  | _____  |   "
     ICON4="$BGREEN    |  | | | |  |    "
     ICON5="$BGREEN    |  | | | |  |    "
     ICON6="$BGREEN    |  \\_____/  |   "
@@ -126,7 +169,7 @@ elif [ "$OS" == "Manjaro" ]; then
 elif [ "$OS" == "openSUSE Leap" ]; then
     ICON1="$BGREEN   _______    "
     ICON2="$BGREEN __|   __ \\  "
-    ICON3="$BGREEN      / .\\ \\"
+    ICON3="$BGREEN      / .\\ \\ "
     ICON4="$BGREEN      \\__/ | "
     ICON5="$BGREEN    _______|  "
     ICON6="$BGREEN    \\_______ "
@@ -141,15 +184,6 @@ elif [ "$OS" == "NixOS" ]; then
     ICON6="$BMAGENTA  //\\\\___//        "
     ICON7="$BMAGENTA // /\\\\  \\\\==    "
     ICON8="$BMAGENTA   // \\\\  \\\\     "
-elif [ "$OS" == "Parabola" ]; then
-    ICON1="$BMAGENTA                "
-    ICON2="$BMAGENTA   __ __ __  _  "
-    ICON3="$BMAGENTA .$(_//_//_/ /)."
-    ICON4="$BMAGENTA           /  .$(";
-    ICON5="$BMAGENTA / .)  "
-    ICON6="$BMAGENTA         /.$(";
-    ICON7="$BMAGENTA /)      "
-    ICON8="$BMAGENTA                "
 elif [ "$OS" == "postmarketOS" ]; then
     ICON1="$BGREEN        /\\        "
     ICON2="$BGREEN       /  \\       "
@@ -162,7 +196,7 @@ elif [ "$OS" == "postmarketOS" ]; then
 elif [ "$OS" == "Pop!_OS" ]; then
     ICON1="$BCYAN ______               "
     ICON2="$BCYAN \\   _ \\        __  "
-    ICON3="$BCYAN  \\ \\ \\ \\      / /"
+    ICON3="$BCYAN  \\ \\ \\ \\      / /  "
     ICON4="$BCYAN   \\ \\_\\ \\    / / "
     ICON5="$BCYAN    \\  ___\\  /_/    "
     ICON6="$BCYAN     \\ \\    _       "
@@ -207,7 +241,7 @@ elif [ "$OS" == "Ubuntu" ]; then
 elif [ "$OS" == "void" ]; then
     ICON1="$BGREEN       _____       "
     ICON2="$BGREEN    _  \\____ -    "
-    ICON3="$BGREEN   / / ____ \\ \\  "
+    ICON3="$BGREEN   / / ____ \\ \\   "
     ICON4="$BGREEN  / / /    \\ \\ \\"
     ICON5="$BGREEN  | |  VOID   | |  "
     ICON6="$BGREEN  \\ \\ \\____/ / /"
@@ -215,11 +249,23 @@ elif [ "$OS" == "void" ]; then
     ICON8="$BGREEN    -_____\\       "
 fi
 
-echo -e "$ICON1"
-echo -e "$ICON2"
-echo -e "$ICON3"
-echo -e "$ICON4"
-echo -e "$ICON5"
-echo -e "$ICON6"
-echo -e "$ICON7"
-echo -e "$ICON8"
+if [ "$TEXT" == "false" ];
+then
+    echo -e "$ICON1"
+    echo -e "$ICON2     $USER "
+    echo -e "$ICON3     $OS   "
+    echo -e "$ICON4"
+    echo -e "$ICON5"
+    echo -e "$ICON6"
+    echo -e "$ICON7"
+    echo -e "$ICON8"
+else
+    echo -e "$ICON1"
+    echo -e "$ICON2   USER  $USER "
+    echo -e "$ICON3     OS  $OS   "
+    echo -e "$ICON4"
+    echo -e "$ICON5"
+    echo -e "$ICON6"
+    echo -e "$ICON7"
+    echo -e "$ICON8"
+fi
