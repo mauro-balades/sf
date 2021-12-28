@@ -20,15 +20,17 @@ To install sf, curl the instalation script and run it with bash.
 curl -fsSL https://raw.githubusercontent.com/mauro-balades/sf/main/install.sh | sh
 ```
 
-### Screenshots
+### Help
+
+To get a help section, just type the following command in your terminal.
+
+```
+man sf
+```
+
+### Screenshot
 
 ![Image (./screenshot/main.png)](./screenshot/main.png)
-
-![Image (./screenshot/text.png)](./screenshot/text.png)
-
-![Image (./screenshot/dos.png)](./screenshot/dos.png)
-
-* and many more customatizations.
 
 ### License
 
