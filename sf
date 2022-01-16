@@ -261,7 +261,7 @@ get_shell() {
     #   "$SHELL" would be equal to "/bin/zsh".
     #   if we get the base name, we would get
     #   "zsg" as the return value
-    echo "$(basename "$SHELL")"
+    "$(basename "$SHELL")"
 }
 
 get_os() {
@@ -299,7 +299,7 @@ get_os() {
         fi
     fi
 
-    echo $OS
+    echo "$OS"
 }
 
 print_section() {
