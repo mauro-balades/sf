@@ -24,6 +24,72 @@
 | SOFTWARE.
 |
 '
+# |---------------------------------------------------------------------------
+# | ABOUT SMALL FETCHER
+# |---------------------------------------------------------------------------
+# | Small fetcher (sm) is a linux distribution's information fetcher. It fetches
+# | information from your linux distribution such as: OS-name, uptime, kernel
+# | and many more. Because it need that information, Small fetcher will expect
+# | some requirements into your distributions such as:
+# |
+# |    * /etc/os-release
+# |    * A valid `$SHELL`
+# |    * uname
+# |
+# | But don't worry if you don't have those files/programs, sm checks
+# | if they exist and it has default values if you use a distro wich
+# | does not meet the requirements. Sm has support for a lot of linux
+# | Distributions such as: Ubuntu, void Gentoo and many more.
+# |
+# | The purpose of sm is to create a simple low-weight system information
+# | fetcher.The fetcher is made in less than 500 lines of bash code (comments
+# | does not count). It is a single file programm so you can install it easily
+# | on your /usr/bin or you can use the installer (more info in the `README.md`).
+# |
+# |---------------------------------------------------------------------------
+# | HOW DOES IT LOOK?
+# |---------------------------------------------------------------------------
+# | Small fetcher (sm) haves a minimalistic look. By default, it uses icons
+# | to display the information, but you can change it to text incase those
+# | icons are not supported in your terminal. It uses ASCII art for the distro's
+# | icon and it uses a variaety of good-looking colors to display those icons.
+# |
+# | If your distribution is not supported, a gray UFO will appear as ICON.
+# |           ___
+# |       ___/   \___      user <USER>
+# |      /   '---'   \   kernel <KERNEL>
+# |      '--_______--'    shell <SHELL>
+# |           / \        uptime <UPTIME>
+# |          /   \          cpu <CPU>
+# |         /     \          os <OS>
+# |
+# |---------------------------------------------------------------------------
+# | CONTRIBUTION
+# |---------------------------------------------------------------------------
+# | * What can I do to contribute?
+# |    - If you whant to contribute to sm, a good way if starting is to add
+# |      support for a new linux distribution. For example, you can check
+# |      if your distribution is supported, if it's not, create a pull request
+# |      mentioning your distribution's name and add a cute-little ASCII art
+# |      for your distro's icon.
+# |    - You can also check for potential bugs and mention them in a new issue
+# |      or go to the next level by creating a pull request with the solution.
+# |    - Saw a spelling mistake? Humans are not perfect (except Joe Satriani),
+# |      that is why someone (probably me) have created a spelling mistake.
+# |      as mentioned above, you can create an issue or a pull request with the
+# |      correction.
+# |    - Do you have a revolutionary new feature you really whant to see in this
+# |      project? You can create an issue explaining the new feature and we will
+# |      discuss how to implement it and eventually, implement it.
+# |
+# |---------------------------------------------------------------------------
+# | LINKS
+# |---------------------------------------------------------------------------
+# | * PULL REQUESTS - https://github.com/mauro-balades/sf/pulls
+# | * ISSUES - https://github.com/mauro-balades/sf/issues
+# | * REPO - https://github.com/mauro-balades/sf
+# | * STACK OVERFLOW - https://stackoverflow.com/
+# |
 
 # Define colors using ANSI color codes
 RESET="\e[0m"
