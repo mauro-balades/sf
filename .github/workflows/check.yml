@@ -15,4 +15,4 @@ jobs:
       run: sudo apt install shellcheck -y
 
     - name: Run shellcheck.
-      run: shellcheck sf
+      run: shellcheck -x sf
