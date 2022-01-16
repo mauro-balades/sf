@@ -381,7 +381,7 @@ main() {
     # Define distro's icon
     get_os_icon "$OS"
 
-    log $USER $OS $KERNEL $SHELL $CPU $UPTIME
+    log "$USER" "$OS" "$KERNEL" "$SHELL" "$CPU" "$UPTIME"
 }
 
 main "$@"
