@@ -30,8 +30,10 @@ man sf
 
 ### Screenshot
 
+This is an screenshot from a KDE linux user.
+
 ![Image (./screenshot/main.png)](./screenshot/main.png)
 
-### License
+#### License
 
 * `Small fetcher` is under the license of [MIT](./LICENSE)
