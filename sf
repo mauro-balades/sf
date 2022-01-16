@@ -239,19 +239,19 @@ get_os_icon() {
 }
 
 get_user() {
-    echo "$(whoami)"
+    whoami
 }
 
 get_kernel() {
-    echo "$(uname -r)"
+    uname -r
 }
 
 get_cpu() {
-    echo "$(lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p')"
+    lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
 }
 
 get_uptime() {
-    echo "$(uname -r | cut -d'-'  -f1-1)"
+    uname -r | cut -d'-'  -f1-1
 }
 
 get_shell() {
@@ -261,7 +261,7 @@ get_shell() {
     #   "$SHELL" would be equal to "/bin/zsh".
     #   if we get the base name, we would get
     #   "zsg" as the return value
-    "$(basename "$SHELL")"
+    basename "$SHELL"
 }
 
 get_os() {
