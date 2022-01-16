@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" src="https://raw.githubusercontent.com/mauro-balades/sf/main/images/header_terminal.png">
+  <img width="100%" src="https://raw.githubusercontent.com/mauro-balades/sf/main/images/header_image.png">
 </p>
 <p align="center">
   <a href="https://github.com/mauro-balades/sf/blob/main/LICENSE">
@@ -11,9 +11,6 @@
 </p>
 
 ---
-
-<h1 align="center"> sf </h1>
-<p align="center"> A small system information fetcher. </p>
 
 ### What is sf?
 
