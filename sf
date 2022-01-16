@@ -96,7 +96,7 @@ KERNEL=$(uname -r)
 CPU=$(lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p')
 
 # Define the uptime
-UPTIME=$(echo $(uname -r) | cut -d'-'  -f1-1)
+UPTIME=$(uname -r | cut -d'-'  -f1-1)
 
 # Get shell.
 # we use basename to get the "shell name".
