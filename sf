@@ -184,14 +184,31 @@
 #           Description => A Unix shell is a command-line interpreter or
 #                          shell that provides a command line user interface
 #                          for Unix-like operating systems.
-#           How do we get it => The shell's path comms already built-in
-#                               as an enviromental variable when you start
-#                               your shell emulator. Ok, we have the path.
-#                               We use `basename` to get the filename from
-#                               $SHELL.
+#           How do we get it => We make some basic checks to see where we can
+#                               get the distribution's name. Intructions on how
+#                               we get the name are on the function its self.
 #           Function => `get_shell()`
-#     TODO: continue with more definitions
 #
+#     `Distribution`:
+#           Variable => `OS`
+#           Description => A Linux distribution is an operating system made
+#                          from a software collection that is based upon the Linux kernel
+#                          and, often, a package management system.
+#           How do we get it =>
+#           Function => `get_os()`
+#
+#  5. When we have everything defined, it is time to log out the information in a
+#     beautifull format. That process is occouring in the `log()` function. The `log()`
+#     function checks if user whants to display information as text or as icons (in case
+#     that terminal does not have support for icons). If user whants it as text, he/she can
+#     select where  to output the text in upper case or small case.
+#
+#     We output the text as:
+#       => `LINE[n]` (e.g. LINE1) "\t" <ICON> <INFORMATION>
+#
+#     The outputing can be seen in the `print_section()` function.
+#
+# ==============================   END   ==============================
 
 # Define colors using ANSI color codes
 RESET="\e[0m"
