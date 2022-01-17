@@ -211,7 +211,7 @@
 # ==============================   END   ==============================
 
 # Define configuration file
-CONFIG_FILE='~/.config/sf/config.sh'
+CONFIG_FILE=~/.config/sf/config.sh
 
 # Define colors using ANSI color codes
 RESET="\e[0m"
