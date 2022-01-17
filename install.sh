@@ -9,8 +9,11 @@ cd sf
 echo "coping shell file to /bin/ (using sudo)..."
 sudo cp sf /bin/sf
 
-echo "coping sf configuration's file..."
-cp "./config.example.sh" "~/.config/sf/config.sh"
+echo "creating config folder..."
+mkdir -p "~/.config/sf/"
+
+echo "coping sf configuration's file (using sudo)..."
+sudo cp -f "./example/config.example.sh" "~/.config/sf/"
 
 echo "cleaning..."
 cd ..
