@@ -12,8 +12,8 @@ sudo cp sf /bin/sf
 echo "creating config folder..."
 mkdir -p ~/.config/sf/
 
-echo "coping sf configuration's file (using sudo)..."
-sudo cp -f "./example/config.sh" ~/.config/sf/
+echo "coping sf configuration's file..."
+cp -f "./example/config.sh" ~/.config/sf/
 
 echo "cleaning..."
 cd ..
