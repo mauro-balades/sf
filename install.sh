@@ -12,7 +12,7 @@ sudo cp sf /bin/sf
 echo "coping sf configuration's file..."
 cp config.example.sh "~/.config/sf/config.sh"
 
-"cleaning..."
+echo "cleaning..."
 cd ..
 sudo rm -rf sf
 
