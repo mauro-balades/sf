@@ -24,6 +24,7 @@
 | SOFTWARE.
 |
 '
+
 # |---------------------------------------------------------------------------
 # | ABOUT SMALL FETCHER
 # |---------------------------------------------------------------------------
@@ -102,26 +103,13 @@
 #     the end so that everything has finished before runing
 #     the actual program.
 #
-#  3. In the `main()` function. we first parse the command line
-#     arguments. This arguments parsing can be found in the
-#     function `parse_args()`.
+#  3. In the `main()` function. We will first open the configuration
+#     `parse_config()` file and source it's content.
 #
-#     a. We declare the positional arguments as an array.
+#     a. We check if a `CONFIG_FILE` exists.
 #
-#     b. We iterate all arguments parsed to the function
-#        and we get the key from "$1"
-#
-#     c. After we get the key from the arguments, do a
-#        switch (or case) statement. In that statement
-#        we check if the argument is a "valid" argument.
-#        If it is a valid argument, se wet it's corresponding
-#        variable to the next value. After that, we shift 2
-#        times so that we can get the next arguments as `$1`
-#        and as `$2`.
-#
-#        If you don't know what shift does, check out it's
-#        definition here:
-#           => https://www.geeksforgeeks.org/shift-command-in-linux-with-examples/
+#        TRUE: source it's content
+#        FALSE: do nothing
 #
 #  4. The next step is to fetch the distribution's information.
 #     since this project is going foward to minimalism, we will
@@ -222,6 +210,9 @@
 #
 # ==============================   END   ==============================
 
+# Define configuration file
+CONFIG_FILE='~/.config/sf/config.sh'
+
 # Define colors using ANSI color codes
 RESET="\e[0m"
 BGREEN="\e[1;32m"
@@ -230,58 +221,29 @@ BCYAN="\e[1;36m"
 BBLUE="\e[1;34m"
 BRED="\e[1;31m"
 BGRAY="\e[1;30m"
-BYELLOW="\e[1;33m"
 
 # Default values
-CCOLOR="auto"     # -c | --color     : Default color for information text (defaults to cyan)
-TEXT="false"      # -t | --text      : Show text instead of icons         (defaults to false)
-OS="auto"         # -o | --OS        : OS to display in the screen        (defaults to auto)
-UPPER_TEXT="true" # -u | --uper-text : print upper text if text is true   (defaults to true)
+CCOLOR="auto"
+TEXT="false"
+OS="auto"
+UPPER_TEXT="true"
 
-parse_args() {
-    # Parse command line arguments
-    POSITIONAL=()
-    while [[ $# -gt 0 ]]; do
-        key="$1"
+parse_config() {
 
-        case $key in
-            -c|--color)
-                CCOLOR="$2"
-                shift # past argument
-                shift # past value
-            ;;
-            -t|--text)
-                TEXT="$2"
-                shift # past argument
-                shift # past value
-            ;;
-            -u|--uper-text)
-                UPPER_TEXT="$2"
-                shift # past argument
-                shift # past value
-            ;;
-            -o|--OS)
-                OS="$2"
-                shift # past argument
-                shift # past value
-            ;;
-            *)    # unknown option
-                POSITIONAL+=("$1") # save it in an array for later
-                shift # past argument
-            ;;
-        esac
-    done
+    if [ -f "$CONFIG_FILE" ]; then
+        . $CONFIG_FILE
 
-    if [ ! "$CCOLOR" == "auto" ];
-    then
-        BGREEN="$CCOLOR"
-        BMAGENTA="$CCOLOR"
-        BCYAN="$CCOLOR"
-        BBLUE="$CCOLOR"
-        BRED="$CCOLOR"
-        BGRAY="$CCOLOR"
-        BYELLOW="$CCOLOR"
+        if [ ! "$CCOLOR" == "auto" ];
+        then
+            BGREEN="$CCOLOR"
+            BMAGENTA="$CCOLOR"
+            BCYAN="$CCOLOR"
+            BBLUE="$CCOLOR"
+            BRED="$CCOLOR"
+            BGRAY="$CCOLOR"
+        fi
     fi
+
 }
 
 get_os_icon() {
@@ -564,7 +526,8 @@ log() {
 }
 
 main() {
-    parse_args "$@"
+
+    parse_config
 
     # We will start by geting the distro's
     # information.
