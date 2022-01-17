@@ -91,6 +91,108 @@
 # | * STACK OVERFLOW - https://stackoverflow.com/
 # |
 
+# ===============   HOW DOES SF WORK   ===============
+#
+#  1. We first declare some variables such as ANSI colors
+#     and default values from the command line. There is
+#     really nothing special about this.
+#
+#  2. We start in the main function, at the bottom of the
+#     script, you can see a main function. We call this at
+#     the end so that everything has finished before runing
+#     the actual program.
+#
+#  3. In the `main()` function. we first parse the command line
+#     arguments. This arguments parsing can be found in the
+#     function `parse_args()`.
+#
+#     a. We declare the positional arguments as an array.
+#
+#     b. We iterate all arguments parsed to the function
+#        and we get the key from "$1"
+#
+#     c. After we get the key from the arguments, do a
+#        switch (or case) statement. In that statement
+#        we check if the argument is a "valid" argument.
+#        If it is a valid argument, se wet it's corresponding
+#        variable to the next value. After that, we shift 2
+#        times so that we can get the next arguments as `$1`
+#        and as `$2`.
+#
+#        If you don't know what shift does, check out it's
+#        definition here:
+#           => https://www.geeksforgeeks.org/shift-command-in-linux-with-examples/
+#
+#  4. The next step is to fetch the distribution's information.
+#     since this project is going foward to minimalism, we will
+#     just take the most important information such as: CPU,
+#     username and some more information.
+#
+#     `username`:
+#           Variable => `USER`
+#           Description => This is the current uername in the
+#                          linux distribution. This enviromental
+#                          variable is set when user login.
+#           How do we get it => We get this user from a built-in
+#                               command called `whoami`. This command
+#                               returns the current user's name.
+#           Function => `get_user()`
+#
+#     `kernel`:
+#           Variable => `KERNEL`
+#           Description => the kernel is the lowest level,
+#                          has complete control of the hardware
+#                          and is always in memory.
+#           How do we get it => The kernel's version can be
+#                               fetched from the built-in command
+#                               called `uname`. We pass the `-r`
+#                               argument so that we just get the
+#                               kernel release printed out.
+#           Function => `get_kernel()`
+#
+#     `cpu`:
+#           Variable => `CPU`
+#           Description => A central processing unit, also called a central
+#                          processor, main processor or just processor, is
+#                          the electronic circuitry that executes instructions
+#                          comprising a computer program.
+#           How do we get it =>
+#               We use 2 commands to get the CPU. We first execute the `lscpu`
+#               built-in command. This command gives use all information from
+#               the user's CPU. After that, we use `sed` to get a certain part
+#               of text from lscpu's output stram. For `sed` we use the -nr
+#               argument:
+#                   `n`: suppress automatic printing of pattern space (Silence mode)
+#                   `r`: use extended regular expressions in the script
+#
+#               We use the following regex to recieve the CPU's model name.
+#                   => '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
+#           Function => `get_cpu()`
+#
+#     `uptime`:
+#           Variable => `UPTIME`
+#           Description => time during which a machine,
+#                          especially a computer, is in operation.
+#           How do we get it => To get the uptime, we use this
+#                               built-in command called `uptime`.
+#                               To make the output prettier, we pass
+#                               the `-p` argument.
+#           Function => `get_uptime()`
+#
+#     `shell name`:
+#           Variable => `SHELL`
+#           Description => A Unix shell is a command-line interpreter or
+#                          shell that provides a command line user interface
+#                          for Unix-like operating systems.
+#           How do we get it => The shell's path comms already built-in
+#                               as an enviromental variable when you start
+#                               your shell emulator. Ok, we have the path.
+#                               We use `basename` to get the filename from
+#                               $SHELL.
+#           Function => `get_shell()`
+#     TODO: continue with more definitions
+#
+
 # Define colors using ANSI color codes
 RESET="\e[0m"
 BGREEN="\e[1;32m"
@@ -110,34 +212,34 @@ parse_args() {
     # Parse command line arguments
     POSITIONAL=()
     while [[ $# -gt 0 ]]; do
-    key="$1"
+        key="$1"
 
-    case $key in
-        -c|--color)
-            CCOLOR="$2"
-            shift # past argument
-            shift # past value
-        ;;
-        -t|--text)
-            TEXT="$2"
-            shift # past argument
-            shift # past value
-        ;;
-        -u|--uper-text)
-            UPPER_TEXT="$2"
-            shift # past argument
-            shift # past value
-        ;;
-        -o|--OS)
-            OS="$2"
-            shift # past argument
-            shift # past value
-        ;;
-        *)    # unknown option
-            POSITIONAL+=("$1") # save it in an array for later
-            shift # past argument
-        ;;
-    esac
+        case $key in
+            -c|--color)
+                CCOLOR="$2"
+                shift # past argument
+                shift # past value
+            ;;
+            -t|--text)
+                TEXT="$2"
+                shift # past argument
+                shift # past value
+            ;;
+            -u|--uper-text)
+                UPPER_TEXT="$2"
+                shift # past argument
+                shift # past value
+            ;;
+            -o|--OS)
+                OS="$2"
+                shift # past argument
+                shift # past value
+            ;;
+            *)    # unknown option
+                POSITIONAL+=("$1") # save it in an array for later
+                shift # past argument
+            ;;
+        esac
     done
 
     if [ ! "$CCOLOR" == "auto" ];
@@ -317,7 +419,7 @@ get_cpu() {
 }
 
 get_uptime() {
-    uname -r | cut -d'-'  -f1-1
+    uptime -p
 }
 
 get_shell() {
@@ -326,7 +428,7 @@ get_shell() {
     #   Imagine you use zsh for your shell.
     #   "$SHELL" would be equal to "/bin/zsh".
     #   if we get the base name, we would get
-    #   "zsg" as the return value
+    #   "zsh" as the return value
     basename "$SHELL"
 }
 

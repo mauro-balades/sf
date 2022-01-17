@@ -3,7 +3,7 @@
 
 ### What is sf?
 
-sf (Small fetcher) is a distribution system fectcher for UNIX-like operating systems. It is very small and the idea was to make it in less than `400` lines. It is very customizable and it works well for linux ricing.
+sf (Small fetcher) is a distribution system fectcher for UNIX-like operating systems. It is very small and the idea was to make it in less than `400` lines (comments does not count `:|`). It is very customizable and it works well for linux ricing.
 
 ### Prequisites
 
