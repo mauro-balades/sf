@@ -138,6 +138,18 @@
 #                               returns the current user's name.
 #           Function => `get_user()`
 #
+#     `hostname`:
+#           Variable => `HOST`
+#           Description =>
+#                   A hostname is a name that is given to a computer that attached to the network that
+#                   uniquely identifies over a network and thus allows it to be accessed without
+#                   using its IP address.
+#           How do we get it => We first check if the built-in command called `hostname` exists.
+#                               If it exists, we just echo it's result. Else, we `cat` the following
+#                               file containing it's hostname content.
+#                                   => /proc/sys/kernel/hostnam
+#           Function => `get_host()`
+#
 #     `kernel`:
 #           Variable => `KERNEL`
 #           Description => the kernel is the lowest level,
@@ -218,6 +230,7 @@ BCYAN="\e[1;36m"
 BBLUE="\e[1;34m"
 BRED="\e[1;31m"
 BGRAY="\e[1;30m"
+BYELLOW="\e[1;33m"
 
 # Default values
 CCOLOR="auto"     # -c | --color     : Default color for information text (defaults to cyan)
@@ -267,6 +280,7 @@ parse_args() {
         BBLUE="$CCOLOR"
         BRED="$CCOLOR"
         BGRAY="$CCOLOR"
+        BYELLOW="$CCOLOR"
     fi
 }
 
@@ -449,6 +463,15 @@ get_shell() {
     basename "$SHELL"
 }
 
+get_host() {
+    if command -v hostname &> /dev/null
+    then
+        echo $(hostname)
+    else
+        echo $(cat /proc/sys/kernel/hostname)
+    fi
+}
+
 get_os() {
     # get OS if the argument (OS) is set to auto.
     if [ "$OS" == "auto" ];
@@ -492,7 +515,7 @@ print_section() {
     local SECTION="$2"
     local VALUE="$3"
 
-    echo -e "$ICON    $SECTION $RESET$VALUE"
+    echo -e "$ICON    $SECTION $RESET$VALUE$RESET"
 }
 
 log() {
@@ -504,11 +527,12 @@ log() {
     local SHELL="$4"
     local CPU="$5"
     local UPTIME="$6"
+    local HOST="$7"
 
     if [ "$TEXT" == "false" ];
     then
         print_section "$ICON1"
-        print_section "$ICON2"   ""  "$USER"
+        print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
         print_section "$ICON3"   ""  "$OS"
         print_section "$ICON4"   ""  "$KERNEL"
         print_section "$ICON5"   ""  "$SHELL"
@@ -519,7 +543,7 @@ log() {
         if [ "$UPPER_TEXT" == "true" ];
         then
             print_section "$ICON1"
-            print_section "$ICON2"   "  USER"  "$USER"
+            print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
             print_section "$ICON3"   "KERNEL"  "$KERNEL"
             print_section "$ICON4"   " SHELL"  "$SHELL"
             print_section "$ICON5"   "UPTIME"  "$UPTIME"
@@ -528,7 +552,7 @@ log() {
             print_section "$ICON8"
         else
             print_section "$ICON1"
-            print_section "$ICON2"   "  user"  "$USER"
+            print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
             print_section "$ICON3"   "kernel"  "$KERNEL"
             print_section "$ICON4"   " shell"  "$SHELL"
             print_section "$ICON5"   "uptime"  "$UPTIME"
@@ -563,10 +587,13 @@ main() {
     # Get the linux's distro
     OS=$(get_os)
 
+    # Get user's host
+    HOST=$(get_host)
+
     # Define distro's icon
     get_os_icon "$OS"
 
-    log "$USER" "$OS" "$KERNEL" "$SHELL" "$CPU" "$UPTIME"
+    log "$USER" "$OS" "$KERNEL" "$SHELL" "$CPU" "$UPTIME" "$HOST"
 }
 
 main "$@"
