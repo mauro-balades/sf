@@ -210,10 +210,19 @@
 #
 # ==============================   END   ==============================
 
-# Define configuration file
+# Define configuration file.
+# This config file is created when
+# installing sf
+#   => https://github.com/mauro-balades/sf#instalation
 CONFIG_FILE=~/.config/sf/config.sh
 
-# Define colors using ANSI color codes
+# Define colors using ANSI color codes.
+# This codes can be overided from
+# the configuration file.
+#
+# note:
+#   * By default, colors will be bold
+#
 RESET="\e[0m"
 BGREEN="\e[1;32m"
 BMAGENTA="\e[1;35m"
@@ -222,11 +231,21 @@ BBLUE="\e[1;34m"
 BRED="\e[1;31m"
 BGRAY="\e[1;30m"
 
-# Default values
+# Default values for simple configuration
+
+# Custom color (overide all colors)
 CCOLOR="auto"
+
+# Print text instead of icons
 TEXT="false"
-OS="auto"
+
+# If `TEXT` is true, print it out as
+# upper case if this value is set to
+# "true".
 UPPER_TEXT="true"
+
+# 
+OS="auto"
 
 parse_config() {
 
