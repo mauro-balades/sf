@@ -14,10 +14,8 @@
 
 ### What is sf?
 
-Small fetcher (sm) is a linux distribution's information fetcher. It fetches
-information from your linux distribution such as: OS-name, uptime, kernel
-and many more. Because it need that information, Small fetcher will expect
-some requirements into your distributions such as:
+sf (Small fetcher) is a distribution system fectcher for UNIX-like operating systems. It is very small and the idea was to make it in less than `400` lines (comments does not count `:|`). It is very customizable and it works well for linux ricing.
+
 
 * /etc/os-release
 * `UNIX-like` OS
