@@ -244,13 +244,18 @@ TEXT="false"
 # "true".
 UPPER_TEXT="true"
 
-# 
+# Define information that will be outputed
+# to the console.
 OS="auto"
+SHELL_NAME="auto"
+KERNEL="auto"
+CPU="auto"
+UPTIME="auto"
 
 parse_config() {
 
     if [ -f "$CONFIG_FILE" ]; then
-        . $CONFIG_FILE
+        builtin . $CONFIG_FILE
 
         if [ ! "$CCOLOR" == "auto" ];
         then
@@ -555,19 +560,34 @@ main() {
     USER=$(get_user)
 
     # Get linux kernel version
-    KERNEL=$(get_kernel)
+    if [ "$KERNEL" == "auto" ];
+    then
+        KERNEL=$(get_kernel)
+    fi
 
     # Get CPU information
-    CPU=$(get_cpu)
+    if [ "$CPU" == "auto" ];
+    then
+        CPU=$(get_cpu)
+    fi
 
     # Define the uptime
-    UPTIME=$(get_uptime)
+    if [ "$UPTIME" == "auto" ];
+    then
+        UPTIME=$(get_uptime)
+    fi
 
     # Get shell.
-    SHELL=$(get_shell)
+    if [ "$SHELL" == "auto" ];
+    then
+        SHELL=$(get_shell)
+    fi
 
     # Get the linux's distro
-    OS=$(get_os)
+    if [ "$OS" == "auto" ];
+    then
+        OS=$(get_os)
+    fi
 
     # Get user's host
     HOST=$(get_host)

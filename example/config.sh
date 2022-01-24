@@ -117,6 +117,10 @@ BGRAY="\e[1;30m"
 #     bash declares it as a string and not
 #     a as a boolean.
 #
+# info:
+#   * default: "false"
+#   * accepts: "false", "true"
+#
 TEXT="false"
 
 # Declare if sf should use text instead of
@@ -130,5 +134,57 @@ TEXT="false"
 UPPER_TEXT="true"
 
 
-# OS="auto"
+# =============== VARIABLES ===============
+#
+# This are a set of variables wich will be used
+# for the information output used in sf.
 
+# Define if OS should be `checked automatically`
+# or to have a static name.
+#
+# note:
+#   * This can affect the distro's logo
+#
+# info:
+#   * default: "auto"
+#   * accepts: "auto", "<ANY NAME YOU WHANT>"
+#
+OS="auto"
+
+# This will be the shell's name. DO NOT
+# change the SHELL variable, because
+# sf will just get confused.
+#
+# example:
+#   zsh, bash, ...
+#
+# info:
+#   * default: "auto"
+#   * accepts: "auto", "<ANY NAME YOU WHANT>"
+#
+SHELL_NAME="auto"
+
+# Change your kernel's name.
+#
+# info:
+#   * default: "auto"
+#   * accepts: "auto", "<ANY NAME YOU WHANT>"
+#
+KERNEL="auto"
+
+# Change your CPU information.
+#
+# info:
+#   * default: "auto"
+#   * accepts: "auto", "<ANY NAME YOU WHANT>"
+#
+CPU="auto"
+
+# Define your uptime from wher you
+# turned on your computer.
+#
+# info:
+#   * default: "auto"
+#   * accepts: "auto", "<ANY NAME YOU WHANT>"
+#
+UPTIME="auto"
