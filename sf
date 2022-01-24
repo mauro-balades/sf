@@ -252,6 +252,16 @@ KERNEL="auto"
 CPU="auto"
 UPTIME="auto"
 
+# `parse_config()`
+#
+# This function is used to check if
+# the configuration file exists. If
+# it exists, we will source the file
+# so that it overides the default values.
+#
+# It also checks if `$CCOLOR` is not set
+# to outo. Because if it is set, all the
+# colors will be overiden by `$CCOLOR`
 parse_config() {
 
     if [ -f "$CONFIG_FILE" ]; then
@@ -270,19 +280,26 @@ parse_config() {
 
 }
 
+# `parse_config()`
+#
+# The `get_os_icon()` function get's
+# the corresponding ASCII art to it's
+# OS name.
+#
+# Args:
+#   `$OS`: User's OS to determin it's icon.
 get_os_icon() {
 
     # Define OS as the first argument
     local OS="$1"
     shift
 
-    # We are getting the distribution's icon.
-    # by default, we will set it as an UFO.
-    # Get it?
-    # because it is an unidentified flying object...
     # ASCII arts will need to have a size of 7 rows,
     # 1 space extra to the right and all rows with
     # the same size.
+
+    # By default, we will set the icon to an
+    # UFO. Because it is `undefined`. :)
     export ICON1="$BGRAY      ___      "
     export ICON2="$BGRAY  ___/   \\___ "
     export ICON3="$BGRAY /   '---'   \\"
@@ -292,6 +309,9 @@ get_os_icon() {
     export ICON7="$BGRAY    /     \\   "
     export ICON8="$BGRAY               "
 
+    # Check for every supported distro and
+    # if the distro and `$OS` match, that would
+    # be the new icon. If not, the UFO.
     if [ "$OS" == "KDE neon" ]; then
         export ICON1="$BGREEN              "
         export ICON2="$BGREEN      --- _   "
@@ -423,22 +443,69 @@ get_os_icon() {
 
 }
 
+# `get_user()`
+#
+# This function is used to fetch the
+# current user's username.
+#
+# Return:
+#   The current user's name.
 get_user() {
     whoami
 }
 
+# `get_kernel()`
+#
+# The `get_kernel()` function is used
+# to get the kernels version.
+#
+# Return:
+#   Kernel's version.
 get_kernel() {
     uname -r
 }
 
+# `get_cpu()`
+#
+# Function to fetch CPU's information
+# in a pretty format.
+#
+# note:
+#   * We use a regex to get a specific
+#     part of the text. `lscpu` returns
+#     a bunch of unnecesary infomation
+#     that we whant to skip.
+#
+#      => '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
+#
+# Return:
+#   CPU's information in a pretty format.
 get_cpu() {
     lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
 }
 
+# `get_user()`
+#
+# This function is used to fetch the
+# current user's username.
+#
+# Return:
+#   The current user's name.
 get_uptime() {
     uptime -p
 }
 
+# `get_shell()`
+#
+# This function is responsible for
+# fetching the current shell's name.
+#
+# note:
+#   * shell's name is determined
+#     by the basename of it's path
+#
+# Return:
+#   The shell's name.
 get_shell() {
     # we use basename to get the "shell name".
     # e.g.
@@ -449,6 +516,21 @@ get_shell() {
     basename "$SHELL"
 }
 
+# `get_host()`
+#
+# The function bellow uses the
+# hostname command to get the
+# host name from user's computer.
+#
+# note:
+#   * If this command does not exist,
+#     we will just get it from the
+#     file bellow
+#
+#     => '/proc/sys/kernel/hostname'
+#
+# Returns:
+#   User's computer hostname
 get_host() {
     if command -v hostname &> /dev/null
     then
@@ -458,6 +540,13 @@ get_host() {
     fi
 }
 
+# `get_os()`
+#
+# Fetch the distribution user
+# is currently in.
+#
+# Return:
+#   A distribution name.
 get_os() {
     # get OS if the argument (OS) is set to auto.
     if [ "$OS" == "auto" ];
@@ -583,11 +672,10 @@ main() {
         SHELL=$(get_shell)
     fi
 
-    # Get the linux's distro
-    if [ "$OS" == "auto" ];
-    then
-        OS=$(get_os)
-    fi
+    # Get the linux's distro.
+    # We already check if `$OS`
+    # is set to "auto" in the function.
+    OS=$(get_os)
 
     # Get user's host
     HOST=$(get_host)
