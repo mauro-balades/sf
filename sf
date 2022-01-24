@@ -534,7 +534,7 @@ get_shell() {
 get_host() {
     if command -v hostname &> /dev/null
     then
-        echo "$(hostname)"
+        hostname
     else
         cat /proc/sys/kernel/hostname
     fi
