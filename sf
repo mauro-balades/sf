@@ -582,6 +582,7 @@ get_os() {
         fi
     fi
 
+    # We do echo as it was `sort of` a "return".
     echo "$OS"
 }
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "cloning..."
-git clone -b code-beauty https://github.com/mauro-balades/sf.git
+git clone https://github.com/mauro-balades/sf.git
 
 echo "changin current directory"
 cd sf
