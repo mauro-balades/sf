@@ -19,7 +19,7 @@ sf (Small fetcher) is a distribution system fectcher for UNIX-like operating sys
 
 * /etc/os-release
 * `UNIX-like` OS
-* 
+
 But don't worry if you don't have those files/programs, sm checks
 if they exist and it has default values if you use a distro wich
 does not meet the requirements. Sm has support for a lot of linux
@@ -43,6 +43,7 @@ curl -fsSL https://raw.githubusercontent.com/mauro-balades/sf/main/install.sh | 
 ### Thanks
 
 * [ufetch](https://gitlab.com/jschx/ufetch) for the ASCII art.
+* Thanks to all of the starazers!
 
 #### License
 
