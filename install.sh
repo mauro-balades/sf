@@ -6,8 +6,8 @@ git clone https://github.com/mauro-balades/sf.git
 echo "changin current directory"
 cd sf
 
-echo "coping shell file to /bin/ (using sudo)..."
-sudo cp sf /bin/sf
+echo "coping shell file to /usr/local/bin/ (using sudo)..."
+sudo cp sf /usr/local/bin/sf
 
 echo "creating config folder..."
 mkdir -p ~/.config/sf/
