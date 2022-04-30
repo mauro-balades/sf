@@ -478,10 +478,17 @@ get_kernel() {
 #
 #      => '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
 #
+#     If the OS is macOS, we use systctl since
+#     `lscpu` does not exist. 
+#
 # Return:
 #   CPU's information in a pretty format.
 get_cpu() {
-    lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sysctl -n machdep.cpu.brand_string
+    else
+        lscpu | sed -nr '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
+    fi
 }
 
 # `get_user()`
@@ -576,6 +583,8 @@ get_os() {
             # Older Red Hat, CentOS, etc.
             # TODO
             ...
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
+            OS=macOS
         else
             # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
             OS=$(uname -s)
