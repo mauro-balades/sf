@@ -660,6 +660,10 @@ main() {
 
     parse_config
 
+    # Allow colors for macOS users
+    export CLICOLOR=1
+    export LSCOLORS=GxFxCxDxBxegedabagaced
+
     # We will start by geting the distro's
     # information.
 
