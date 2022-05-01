@@ -223,13 +223,13 @@ CONFIG_FILE=~/.config/sf/config.sh
 # note:
 #   * By default, colors will be bold
 #
-RESET="\e[0m"
-BGREEN="\e[1;32m"
-BMAGENTA="\e[1;35m"
-BCYAN="\e[1;36m"
-BBLUE="\e[1;34m"
-BRED="\e[1;31m"
-BGRAY="\e[1;30m"
+RESET="\033[0m"
+BGREEN="\033[1;32m"
+BMAGENTA="\033[1;35m"
+BCYAN="\033[1;36m"
+BBLUE="\033[1;34m"
+BRED="\033[1;31m"
+BGRAY="\033[1;30m"
 
 # Default values for simple configuration
 
