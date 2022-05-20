@@ -42,15 +42,15 @@
 # | does not meet the requirements. Sm has support for a lot of linux
 # | Distributions such as: Ubuntu, void Gentoo and many more.
 # |
-# | The purpose of sm is to create a simple low-weight system information
-# | fetcher.The fetcher is made in less than 500 lines of bash code (comments
+# | The purpose of sf is to create a simple low-weight system information
+# | fetcher. The fetcher is made in less than 500 lines of bash code (comments
 # | does not count). It is a single file programm so you can install it easily
 # | on your /usr/bin or you can use the installer (more info in the `README.md`).
 # |
 # |---------------------------------------------------------------------------
 # | HOW DOES IT LOOK?
 # |---------------------------------------------------------------------------
-# | Small fetcher (sm) haves a minimalistic look. By default, it uses icons
+# | Small fetcher (sf) haves a minimalistic look. By default, it uses icons
 # | to display the information, but you can change it to text incase those
 # | icons are not supported in your terminal. It uses ASCII art for the distro's
 # | icon and it uses a variaety of good-looking colors to display those icons.
