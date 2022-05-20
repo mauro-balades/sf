@@ -42,16 +42,16 @@
 # | does not meet the requirements. Sm has support for a lot of Linux
 # | Distributions like Ubuntu, void Gentoo and many more.
 # |
-# | The purpose of sm is to create a simple low-weight system information
+# | The purpose of sf is to create a simple low-weight system information
 # | fetcher. The fetcher is made in less than 500 lines of bash code (comments
-# | does not count). It is a single file programm so you can install it easily
+# | does not count). It is a single file program so you can install it easily
 # | on your /usr/bin or you can use the installer (more info in the `README.md`).
 # |
 # |---------------------------------------------------------------------------
 # | HOW DOES IT LOOK?
 # |---------------------------------------------------------------------------
-# | Small fetcher (sm) haves a minimalistic look. By default, it uses icons
-# | to display the information, but you can change it to text incase those
+# | Small fetcher (sf) have a minimalistic look. By default, it uses icons
+# | to display the information, but you can change it to text in case those
 # | icons are not supported in your terminal. It uses ASCII art for the distro's
 # | icon and it uses a variaety of good-looking colors to display those icons.
 # |
@@ -68,8 +68,8 @@
 # | CONTRIBUTION
 # |---------------------------------------------------------------------------
 # | * What can I do to contribute?
-# |    - If you whant to contribute to sm, a good way if starting is to add
-# |      support for a new linux distribution. For example, you can check
+# |    - If you want to contribute to sm, a good way if starting is to add
+# |      support for a new Linux distribution. For example, you can check
 # |      if your distribution is supported, if it's not, create a pull request
 # |      mentioning your distribution's name and add a cute-little ASCII art
 # |      for your distro's icon.
@@ -79,7 +79,7 @@
 # |      that is why someone (probably me) have created a spelling mistake.
 # |      as mentioned above, you can create an issue or a pull request with the
 # |      correction.
-# |    - Do you have a revolutionary new feature you really whant to see in this
+# |    - Do you have a revolutionary new feature you really want to see in this
 # |      project? You can create an issue explaining the new feature and we will
 # |      discuss how to implement it and eventually, implement it.
 # |
@@ -199,8 +199,8 @@
 #
 #  5. When we have everything defined, it is time to log out the information in a
 #     beautifull format. That process is occouring in the `log()` function. The `log()`
-#     function checks if user whants to display information as text or as icons (in case
-#     that terminal does not have support for icons). If user whants it as text, he/she can
+#     function checks if user wants to display information as text or as icons (in case
+#     that terminal does not have support for icons). If user wants it as text, he/she can
 #     select where  to output the text in upper case or small case.
 #
 #     We output the text as:
@@ -472,7 +472,7 @@ get_kernel() {
 #   * We use a regex to get a specific
 #     part of the text. `lscpu` returns
 #     a bunch of unnecesary infomation
-#     that we whant to skip.
+#     that we want to skip.
 #
 #      => '/Model name/ s/.*:\s*(.*) @ .*/\1/p'
 #
