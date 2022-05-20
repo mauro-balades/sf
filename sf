@@ -28,10 +28,10 @@
 # |---------------------------------------------------------------------------
 # | ABOUT SMALL FETCHER
 # |---------------------------------------------------------------------------
-# | Small fetcher (sm) is a linux distribution's information fetcher. It fetches
-# | information from your linux distribution such as: OS-name, uptime, kernel
-# | and many more. Because it need that information, Small fetcher will expect
-# | some requirements into your distributions such as:
+# | Small fetcher (sm) is a Linux distribution's information fetcher. It fetches
+# | information from your Linux distribution such: OS-name, uptime, kernel
+# | and many more. Because it needs that information, Small fetcher will expect
+# | some requirements for your distributions such as:
 # |
 # |    * /etc/os-release
 # |    * A valid `$SHELL`
@@ -39,11 +39,11 @@
 # |
 # | But don't worry if you don't have those files/programs, sm checks
 # | if they exist and it has default values if you use a distro wich
-# | does not meet the requirements. Sm has support for a lot of linux
-# | Distributions such as: Ubuntu, void Gentoo and many more.
+# | does not meet the requirements. Sm has support for a lot of Linux
+# | Distributions like Ubuntu, void Gentoo and many more.
 # |
 # | The purpose of sm is to create a simple low-weight system information
-# | fetcher.The fetcher is made in less than 500 lines of bash code (comments
+# | fetcher. The fetcher is made in less than 500 lines of bash code (comments
 # | does not count). It is a single file programm so you can install it easily
 # | on your /usr/bin or you can use the installer (more info in the `README.md`).
 # |
@@ -267,8 +267,7 @@ parse_config() {
     if [ -f "$CONFIG_FILE" ]; then
         builtin . $CONFIG_FILE
 
-        if [ ! "$CCOLOR" == "auto" ];
-        then
+        if [ ! "$CCOLOR" == "auto" ]; then
             BGREEN="$CCOLOR"
             BMAGENTA="$CCOLOR"
             BCYAN="$CCOLOR"
@@ -429,8 +428,7 @@ get_os_icon() {
         export ICON6="$BGREEN  \\ \\ \\____/ / /  "
         export ICON7="$BGREEN   \\ \\____  /_/   "
         export ICON8="$BGREEN    -_____\\       "
-    elif [ "$OS" == "Debian" ] || [ "$OS" == "Debian GNU/Linux" ];
-    then
+    elif [ "$OS" == "Debian" ] || [ "$OS" == "Debian GNU/Linux" ]; then
         export ICON1="$BRED   _____   "
         export ICON2="$BRED  /  __ \\ "
         export ICON3="$BRED |  /    |"
@@ -500,10 +498,10 @@ get_cpu() {
 #   The current user's name.
 get_uptime() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        boottime=`sysctl -n kern.boottime | awk '{print $4}' | sed 's/,//g'`
-        unixtime=`date +%s`
+        boottime=$(sysctl -n kern.boottime | awk '{print $4}' | sed 's/,//g')
+        unixtime=$(date +%s)
         timeAgo=$(($unixtime - $boottime))
-        uptime=`awk -v time=$timeAgo 'BEGIN { seconds = time % 60; minutes = int(time / 60 % 60); hours = int(time / 60 / 60 % 24); days = int(time / 60 / 60 / 24); printf("%.0f days, %.0f hours, %.0f minutes, %.0f seconds", days, hours, minutes, seconds); exit }'`
+        uptime=$(awk -v time=$timeAgo 'BEGIN { seconds = time % 60; minutes = int(time / 60 % 60); hours = int(time / 60 / 60 % 24); days = int(time / 60 / 60 / 24); printf("%.0f days, %.0f hours, %.0f minutes, %.0f seconds", days, hours, minutes, seconds); exit }')
         echo $uptime
     else
         uptime -p
@@ -547,8 +545,7 @@ get_shell() {
 # Returns:
 #   User's computer hostname
 get_host() {
-    if command -v hostname &> /dev/null
-    then
+    if command -v hostname &>/dev/null; then
         hostname
     else
         cat /proc/sys/kernel/hostname
@@ -564,8 +561,7 @@ get_host() {
 #   A distribution name.
 get_os() {
     # get OS if the argument (OS) is set to auto.
-    if [ "$OS" == "auto" ];
-    then
+    if [ "$OS" == "auto" ]; then
         # Check if /etc/os-release exists
         if [ -f /etc/os-release ]; then
             # Source os-release
@@ -573,7 +569,7 @@ get_os() {
 
             # Get variables
             OS=$NAME
-        elif type lsb_release > /dev/null 2>&1; then
+        elif type lsb_release >/dev/null 2>&1; then
             # linuxbase.org
             OS=$(lsb_release -si)
         elif [ -f /etc/lsb-release ]; then
@@ -622,35 +618,33 @@ log() {
     local UPTIME="$6"
     local HOST="$7"
 
-    if [ "$TEXT" == "false" ];
-    then
+    if [ "$TEXT" == "false" ]; then
         print_section "$ICON1"
-        print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
-        print_section "$ICON3"   ""  "$OS"
-        print_section "$ICON4"   ""  "$KERNEL"
-        print_section "$ICON5"   ""  "$SHELL"
-        print_section "$ICON6"   ""  "$CPU"
-        print_section "$ICON7"   ""  "$UPTIME"
+        print_section "$ICON2" "$USER$BCYAN@$HOST" ""
+        print_section "$ICON3" "" "$OS"
+        print_section "$ICON4" "" "$KERNEL"
+        print_section "$ICON5" "" "$SHELL"
+        print_section "$ICON6" "" "$CPU"
+        print_section "$ICON7" "" "$UPTIME"
         print_section "$ICON8"
     else
-        if [ "$UPPER_TEXT" == "true" ];
-        then
+        if [ "$UPPER_TEXT" == "true" ]; then
             print_section "$ICON1"
-            print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
-            print_section "$ICON3"   "KERNEL"  "$KERNEL"
-            print_section "$ICON4"   " SHELL"  "$SHELL"
-            print_section "$ICON5"   "UPTIME"  "$UPTIME"
-            print_section "$ICON6"   "   CPU"  "$CPU"
-            print_section "$ICON7"   "    OS"  "$OS"
+            print_section "$ICON2" "$USER$BCYAN@$HOST" ""
+            print_section "$ICON3" "KERNEL" "$KERNEL"
+            print_section "$ICON4" " SHELL" "$SHELL"
+            print_section "$ICON5" "UPTIME" "$UPTIME"
+            print_section "$ICON6" "   CPU" "$CPU"
+            print_section "$ICON7" "    OS" "$OS"
             print_section "$ICON8"
         else
             print_section "$ICON1"
-            print_section "$ICON2"   "$USER$BCYAN@$HOST"  ""
-            print_section "$ICON3"   "kernel"  "$KERNEL"
-            print_section "$ICON4"   " shell"  "$SHELL"
-            print_section "$ICON5"   "uptime"  "$UPTIME"
-            print_section "$ICON6"   "   cpu"  "$CPU"
-            print_section "$ICON7"   "    os"  "$OS"
+            print_section "$ICON2" "$USER$BCYAN@$HOST" ""
+            print_section "$ICON3" "kernel" "$KERNEL"
+            print_section "$ICON4" " shell" "$SHELL"
+            print_section "$ICON5" "uptime" "$UPTIME"
+            print_section "$ICON6" "   cpu" "$CPU"
+            print_section "$ICON7" "    os" "$OS"
             print_section "$ICON8"
         fi
     fi
@@ -671,26 +665,22 @@ main() {
     USER=$(get_user)
 
     # Get linux kernel version
-    if [ "$KERNEL" == "auto" ];
-    then
+    if [ "$KERNEL" == "auto" ]; then
         KERNEL=$(get_kernel)
     fi
 
     # Get CPU information
-    if [ "$CPU" == "auto" ];
-    then
+    if [ "$CPU" == "auto" ]; then
         CPU=$(get_cpu)
     fi
 
     # Define the uptime
-    if [ "$UPTIME" == "auto" ];
-    then
+    if [ "$UPTIME" == "auto" ]; then
         UPTIME=$(get_uptime)
     fi
 
     # Get shell.
-    if [ "$SHELL_NAME" == "auto" ];
-    then
+    if [ "$SHELL_NAME" == "auto" ]; then
         SHELL=$(get_shell)
     fi
 
