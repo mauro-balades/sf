@@ -428,6 +428,15 @@ get_os_icon() {
         export ICON6="$BGREEN  \\ \\ \\____/ / /  "
         export ICON7="$BGREEN   \\ \\____  /_/   "
         export ICON8="$BGREEN    -_____\\       "
+    elif [ "$OS" == "Arch Linux" ]; then
+        export ICON1="$BRED       /\       "
+        export ICON2="$BRED      /  \      "
+        export ICON3="$BRED     /\   \     "
+        export ICON4="$BRED    /  __  \    "
+	    export ICON5="$BRED   /  (  )  \   "
+	    export ICON6="$BRED  / __|  |__ \  "
+        export ICON7="$BRED /.\*      */.\ "
+	    export ICON8="$BRED"
     elif [ "$OS" == "Debian" ] || [ "$OS" == "Debian GNU/Linux" ]; then
         export ICON1="$BRED   _____   "
         export ICON2="$BRED  /  __ \\ "
